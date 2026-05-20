@@ -1,0 +1,927 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------
+   DESIGN TOKENS & SYSTEM VARIABLES (Theme Presets)
+   ---------------------------------------------------- */
+:root {
+  /* Default: Cyberpunk Purple (Dark) */
+  --bg-color: #030008;
+  --bg-grid-color: rgba(147, 51, 234, 0.05);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-color: #a855f7;
+  --accent-secondary: #06b6d4;
+  --accent-gradient: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%);
+  --card-bg: rgba(15, 10, 25, 0.5);
+  --card-border: rgba(168, 85, 247, 0.15);
+  --card-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.08);
+  --glow-color: rgba(168, 85, 247, 0.4);
+  --glow-secondary: rgba(6, 182, 212, 0.3);
+  --font-family: var(--font-outfit), sans-serif;
+  
+  --transition-speed: 0.6s;
+  --animation-curve: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Theme: Emerald Matrix (Dark) */
+[data-theme="emerald"] {
+  --bg-color: #020604;
+  --bg-grid-color: rgba(16, 185, 129, 0.04);
+  --text-primary: #f0fdf4;
+  --text-secondary: #a7f3d0;
+  --accent-color: #10b981;
+  --accent-secondary: #34d399;
+  --accent-gradient: linear-gradient(135deg, #10b981 0%, #00f2fe 100%);
+  --card-bg: rgba(6, 20, 15, 0.6);
+  --card-border: rgba(16, 185, 129, 0.15);
+  --card-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.08);
+  --glow-color: rgba(16, 185, 129, 0.4);
+  --glow-secondary: rgba(0, 242, 254, 0.3);
+}
+
+/* Theme: Midnight Steel (Dark) */
+[data-theme="steel"] {
+  --bg-color: #0b0f19;
+  --bg-grid-color: rgba(59, 130, 246, 0.04);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-color: #3b82f6;
+  --accent-secondary: #60a5fa;
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  --card-bg: rgba(17, 24, 39, 0.6);
+  --card-border: rgba(59, 130, 246, 0.15);
+  --card-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.08);
+  --glow-color: rgba(59, 130, 246, 0.4);
+  --glow-secondary: rgba(96, 165, 250, 0.3);
+}
+
+/* Theme: Crimson Dawn (Dark Red) */
+[data-theme="crimson"] {
+  --bg-color: #070101;
+  --bg-grid-color: rgba(239, 68, 68, 0.04);
+  --text-primary: #fef2f2;
+  --text-secondary: #fca5a5;
+  --accent-color: #ef4444;
+  --accent-secondary: #f97316;
+  --accent-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  --card-bg: rgba(20, 8, 8, 0.6);
+  --card-border: rgba(239, 68, 68, 0.15);
+  --card-shadow: 0 8px 32px 0 rgba(239, 68, 68, 0.08);
+  --glow-color: rgba(239, 68, 68, 0.4);
+  --glow-secondary: rgba(249, 115, 22, 0.3);
+}
+
+/* Theme: Solar Flare (Light Theme) */
+[data-theme="solar"] {
+  --bg-color: #fafaf9;
+  --bg-grid-color: rgba(249, 115, 22, 0.04);
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --accent-color: #f97316;
+  --accent-secondary: #ea580c;
+  --accent-gradient: linear-gradient(135deg, #f97316 0%, #eab308 100%);
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(249, 115, 22, 0.2);
+  --card-shadow: 0 8px 32px 0 rgba(249, 115, 22, 0.06);
+  --glow-color: rgba(249, 115, 22, 0.2);
+  --glow-secondary: rgba(234, 88, 12, 0.15);
+}
+
+/* ----------------------------------------------------
+   CORE LAYOUT & RESET
+   ---------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* Ambient Background Grid */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bg-grid-color) 1px, transparent 1px);
+  z-index: 0;
+  pointer-events: none;
+  animation: grid-move 60s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes grid-move {
+  0% { background-position: 0px 0px; }
+  100% { background-position: 50px 50px; }
+}
+
+/* Ambient Glowing Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: all 1s ease;
+}
+
+.orb-1 {
+  width: 30vw;
+  height: 30vw;
+  background: var(--glow-color);
+  top: -10%;
+  left: 10%;
+  animation: float-orb-1 25s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 25vw;
+  height: 25vw;
+  background: var(--glow-secondary);
+  bottom: -5%;
+  right: 15%;
+  animation: float-orb-2 20s ease-in-out infinite alternate;
+}
+
+@keyframes float-orb-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 30px) scale(1.1); }
+  100% { transform: translate(-30px, 60px) scale(0.95); }
+}
+
+@keyframes float-orb-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -40px) scale(0.9); }
+  100% { transform: translate(40px, 20px) scale(1.1); }
+}
+
+/* ----------------------------------------------------
+   PRESENTATION LAYOUT & SHELL
+   ---------------------------------------------------- */
+.app-container {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  transition: margin-left 0.4s ease;
+}
+
+/* ----------------------------------------------------
+   GLASSMORPHISM & ACCENTS
+   ---------------------------------------------------- */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 16px;
+  color: var(--text-primary);
+  transition: all 0.4s var(--animation-curve);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(255, 255, 255, 0.05), var(--card-shadow);
+}
+
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* ----------------------------------------------------
+   TRANSITION ENGINE (Slide Transitions)
+   ---------------------------------------------------- */
+.slide-viewport {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1500px;
+}
+
+.slide-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Slide Transition Animations */
+/* FADE */
+.trans-fade-enter {
+  opacity: 0;
+}
+.trans-fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-fade-exit {
+  opacity: 1;
+}
+.trans-fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* SLIDE LEFT */
+.trans-slide-left-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.trans-slide-left-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-slide-left-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+.trans-slide-left-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* SLIDE RIGHT */
+.trans-slide-right-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.trans-slide-right-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-slide-right-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+.trans-slide-right-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* ZOOM */
+.trans-zoom-enter {
+  transform: scale(0.7);
+  opacity: 0;
+}
+.trans-zoom-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-zoom-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+.trans-zoom-exit-active {
+  transform: scale(1.3);
+  opacity: 0;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* FLIP */
+.trans-flip-enter {
+  transform: rotateY(90deg);
+  opacity: 0;
+}
+.trans-flip-enter-active {
+  transform: rotateY(0deg);
+  opacity: 1;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-flip-exit {
+  transform: rotateY(0deg);
+  opacity: 1;
+}
+.trans-flip-exit-active {
+  transform: rotateY(-90deg);
+  opacity: 0;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* 3D PERSPECTIVE CUBE */
+.trans-cube-enter {
+  transform: rotateX(90deg) translateZ(100px);
+  opacity: 0;
+}
+.trans-cube-enter-active {
+  transform: rotateX(0deg) translateZ(0);
+  opacity: 1;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+.trans-cube-exit {
+  transform: rotateX(0deg) translateZ(0);
+  opacity: 1;
+}
+.trans-cube-exit-active {
+  transform: rotateX(-90deg) translateZ(100px);
+  opacity: 0;
+  transition: transform var(--transition-speed) var(--animation-curve), opacity var(--transition-speed) var(--animation-curve);
+}
+
+/* ----------------------------------------------------
+   SLIDE CONTENT ANIMATIONS (Entrance & Flow)
+   ---------------------------------------------------- */
+.anim-delay-1 { animation-delay: 0.1s !important; }
+.anim-delay-2 { animation-delay: 0.25s !important; }
+.anim-delay-3 { animation-delay: 0.4s !important; }
+.anim-delay-4 { animation-delay: 0.55s !important; }
+.anim-delay-5 { animation-delay: 0.7s !important; }
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s var(--animation-curve) forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInLeft 0.8s var(--animation-curve) forwards;
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: scaleIn 0.8s var(--animation-curve) forwards;
+}
+
+@keyframes scaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Pulse Glow Keyframes */
+.pulsating-glow {
+  box-shadow: 0 0 15px var(--glow-color);
+  animation: pulse-glow 3s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 10px var(--glow-color); }
+  100% { box-shadow: 0 0 25px var(--glow-color), 0 0 10px var(--glow-secondary); }
+}
+
+/* ----------------------------------------------------
+   SLIDE-SPECIFIC DESIGNS
+   ---------------------------------------------------- */
+
+/* Slide 1 - Title */
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.glowing-core {
+  width: 120px;
+  height: 120px;
+  background: var(--accent-gradient);
+  border-radius: 40% 60% 70% 30% / 40% 50% 65% 55%;
+  filter: drop-shadow(0 0 20px var(--accent-color));
+  animation: morph-core 10s ease-in-out infinite alternate, spin 20s linear infinite;
+  margin-bottom: 30px;
+}
+
+@keyframes morph-core {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 65% 55%; }
+  50% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 60%; }
+  100% { border-radius: 60% 40% 60% 40% / 40% 30% 70% 60%; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Slide 2 - Timeline Cards */
+.timeline-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.timeline-card {
+  cursor: pointer;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s var(--animation-curve);
+}
+
+.timeline-card.active {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15), var(--card-shadow);
+  transform: translateY(-8px);
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.timeline-card:hover::before, .timeline-card.active::before {
+  transform: scaleX(1);
+}
+
+/* Slide 3 - Diagram Canvas */
+.diagram-canvas {
+  width: 100%;
+  height: 420px;
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.diagram-svg-container {
+  flex: 3;
+  position: relative;
+  border-radius: 12px;
+  overflow: visible;
+  height: 100%;
+}
+
+.diagram-sidebar {
+  flex: 1.5;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  border-left: 1px solid var(--card-border);
+}
+
+.node-group {
+  cursor: pointer;
+}
+
+.node-rect {
+  transition: all 0.3s ease;
+  stroke-width: 1.5px;
+  stroke: var(--card-border);
+  fill: var(--card-bg);
+}
+
+.node-group:hover .node-rect, .node-group.active .node-rect {
+  stroke: var(--accent-color);
+  fill: rgba(168, 85, 247, 0.1);
+  filter: drop-shadow(0 0 8px var(--glow-color));
+}
+
+.node-text {
+  font-weight: 600;
+  font-size: 14px;
+  fill: var(--text-primary);
+  transition: fill 0.3s ease;
+}
+
+.node-icon-bg {
+  fill: var(--accent-gradient);
+  opacity: 0.15;
+}
+
+.flow-line {
+  stroke: var(--card-border);
+  stroke-width: 2px;
+  fill: none;
+  transition: stroke 0.3s ease;
+}
+
+.flow-line-active {
+  stroke: var(--accent-secondary);
+  stroke-width: 2.5px;
+  stroke-dasharray: 8 6;
+  animation: dash 15s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+/* Slide 4 - SVG Charts */
+.chart-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.chart-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-bar {
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), fill 0.4s ease;
+}
+
+.radial-circle {
+  transition: stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
+}
+
+/* Slide 5 - 3D Hover Layers */
+.deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 30px;
+  height: 380px;
+}
+
+.layer-stack {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  transform: rotateX(55deg) rotateZ(-30deg) translateY(-20px);
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.layer-stack:hover {
+  transform: rotateX(45deg) rotateZ(-20deg) translateY(-40px);
+}
+
+.layer-3d {
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  transform-style: preserve-3d;
+  transition: all 0.5s var(--animation-curve);
+  cursor: pointer;
+}
+
+.layer-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-gradient);
+  border-radius: 12px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.layer-3d:hover::after, .layer-3d.active::after {
+  opacity: 0.15;
+}
+
+.layer-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.layer-0 { transform: translateZ(0px); }
+.layer-1 { transform: translateZ(60px); }
+.layer-2 { transform: translateZ(120px); }
+.layer-3 { transform: translateZ(180px); }
+
+/* Stack spread on hover */
+.layer-stack:hover .layer-0 { transform: translateZ(0px); }
+.layer-stack:hover .layer-1 { transform: translateZ(90px); }
+.layer-stack:hover .layer-2 { transform: translateZ(180px); }
+.layer-stack:hover .layer-3 { transform: translateZ(270px); }
+
+/* Slide 6 - Roadmap list */
+.roadmap-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.roadmap-item:hover {
+  transform: translateX(10px);
+  border-color: var(--accent-color);
+}
+
+.roadmap-bullet {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* ----------------------------------------------------
+   INTERFACE OVERLAYS & SHELLS
+   ---------------------------------------------------- */
+
+/* Navigation Bottom Control Bar */
+.bottom-controls {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 30px;
+  z-index: 100;
+  width: auto;
+  max-width: 90vw;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-color);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.progress-track {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  transition: width 0.4s var(--animation-curve);
+  border-radius: 2px;
+}
+
+/* Presenter Sidebar (Collapsible config) */
+.sidebar-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  z-index: 150;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--animation-curve);
+  border-left: 1px solid var(--card-border);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 24px;
+  box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+}
+
+.sidebar-panel.open {
+  transform: translateX(0);
+}
+
+.sidebar-trigger {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 140;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.fullscreen-trigger {
+  position: absolute;
+  top: 24px;
+  right: 84px;
+  z-index: 140;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.section-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.control-group {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.theme-dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.theme-dot.active {
+  transform: scale(1.15);
+  border-color: var(--text-primary);
+}
+
+.theme-dot-cyber { background: linear-gradient(135deg, #a855f7, #06b6d4); }
+.theme-dot-emerald { background: linear-gradient(135deg, #10b981, #00f2fe); }
+.theme-dot-steel { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+.theme-dot-crimson { background: linear-gradient(135deg, #ef4444, #f97316); }
+
+.select-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.select-input:focus {
+  border-color: var(--accent-color);
+}
+
+/* Slide Directory inside Sidebar */
+.slide-directory {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dir-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.dir-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--card-border);
+}
+
+.dir-item.active {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Presenter Speaker Timer */
+.timer-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN (Adaptive Slides)
+   ---------------------------------------------------- */
+@media (max-width: 1024px) {
+  .slide-wrapper {
+    padding: 30px 40px;
+  }
+  .timeline-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .diagram-canvas {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .chart-container {
+    grid-template-columns: 1fr;
+  }
+  .deck-container {
+    flex-direction: column;
+    height: auto;
+    gap: 30px;
+  }
+  .bottom-controls {
+    bottom: 12px;
+  }
+}
