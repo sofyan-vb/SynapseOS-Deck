@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import SlideFrame from "./components/SlideFrame";
-import Controls from "./components/Controls";
 import Sidebar from "./components/Sidebar";
 import { 
   Sun, 
@@ -14,7 +13,10 @@ import {
   Search, 
   X, 
   Cpu,
-  SquarePen
+  SquarePen,
+  Maximize,
+  Minimize,
+  Menu
 } from "lucide-react";
 
 // 11 Academic Slide Imports
@@ -565,6 +567,42 @@ export default function PresentationPage() {
               <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>{batteryLevel}%</span>
             </button>
 
+            {/* Fullscreen Trigger */}
+            <button
+              onClick={toggleFullscreen}
+              style={{
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                padding: "4px",
+                display: "flex",
+                alignItems: "center",
+                color: "var(--text-primary)"
+              }}
+              className="nav-btn"
+              title={isFullscreen ? "Keluar Layar Penuh (Esc)" : "Layar Penuh (F)"}
+            >
+              {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+            </button>
+
+            {/* Open Sidebar Menu */}
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              style={{
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                padding: "4px",
+                display: "flex",
+                alignItems: "center",
+                color: "var(--accent-color)"
+              }}
+              className="nav-btn"
+              title="Buka Menu Panel Kontrol (M)"
+            >
+              <Menu size={16} />
+            </button>
+
             <div style={{ width: "1px", height: "14px", background: "var(--card-border)" }} />
 
             {/* Live Clock Display */}
@@ -573,6 +611,29 @@ export default function PresentationPage() {
             </span>
           </div>
         </header>
+
+        {/* Slide Number Indicator in the Corner */}
+        <div 
+          style={{
+            position: "absolute",
+            top: "62px",
+            right: "24px",
+            zIndex: 90,
+            background: "rgba(10, 8, 20, 0.45)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            padding: "4px 14px",
+            borderRadius: "12px",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            color: "var(--text-secondary)",
+            letterSpacing: "1px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.25)"
+          }}
+        >
+          {currentSlide + 1} / {totalSlides}
+        </div>
 
         <SlideFrame
           slideId={currentSlide}
@@ -609,18 +670,7 @@ export default function PresentationPage() {
           </div>
         )}
 
-        {/* Floating Controls Overlay */}
-        <Controls
-          current={currentSlide}
-          total={totalSlides}
-          isPlaying={isPlaying}
-          onNext={handleNext}
-          onPrev={handlePrev}
-          onTogglePlay={() => setIsPlaying((prev) => !prev)}
-          onOpenSidebar={() => setIsSidebarOpen(true)}
-          isFullscreen={isFullscreen}
-          onToggleFullscreen={toggleFullscreen}
-        />
+
       </main>
 
       {/* Collapsible Panel Overlay */}
