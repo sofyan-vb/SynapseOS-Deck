@@ -1,14 +1,22 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Award, CheckCircle2, TrendingUp, TableProperties } from "lucide-react";
+import AnimatedNumber from "../AnimatedNumber";
 
 export default function Slide9Evaluation() {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    setActive(true);
+  }, []);
+
   const accuracy = 93.08;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="diagonal-fade">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-secondary)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB VI: HASIL & EVALUASI SISTEM
         </span>
@@ -22,7 +30,7 @@ export default function Slide9Evaluation() {
 
       {/* Main Grid */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="diagonal-fade anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1fr 1.3fr", 
@@ -54,7 +62,7 @@ export default function Slide9Evaluation() {
 
           {/* Glowing Radial progress bar */}
           <div style={{ position: "relative", width: "130px", height: "130px", margin: "10px 0" }}>
-            {/* Animated rotating outer scanner ring */}
+            {/* Animated rotating outer scanner ring 1 (Clockwise, fast) */}
             <svg 
               width="130" 
               height="130" 
@@ -62,8 +70,9 @@ export default function Slide9Evaluation() {
               style={{ 
                 position: "absolute", 
                 inset: 0, 
-                animation: "spin 20s linear infinite",
-                pointerEvents: "none"
+                animation: "spin 4s linear infinite",
+                pointerEvents: "none",
+                zIndex: 2
               }}
             >
               <circle 
@@ -71,12 +80,62 @@ export default function Slide9Evaluation() {
                 cy="50" 
                 r="47" 
                 fill="transparent" 
-                stroke="rgba(16, 185, 129, 0.25)" 
+                stroke="rgba(16, 185, 129, 0.35)" 
                 strokeWidth="1" 
                 strokeDasharray="4 6" 
               />
             </svg>
-            <svg width="130" height="130" viewBox="0 0 100 100">
+            
+            {/* Animated rotating outer scanner ring 2 (Counter-Clockwise, medium) */}
+            <svg 
+              width="130" 
+              height="130" 
+              viewBox="0 0 100 100" 
+              style={{ 
+                position: "absolute", 
+                inset: 0, 
+                animation: "spin-reverse 6s linear infinite",
+                pointerEvents: "none",
+                zIndex: 2
+              }}
+            >
+              <circle 
+                cx="50" 
+                cy="50" 
+                r="44" 
+                fill="transparent" 
+                stroke="rgba(6, 182, 212, 0.25)" 
+                strokeWidth="0.8" 
+                strokeDasharray="6 4" 
+              />
+            </svg>
+
+            {/* Animated radar sweep line & sector overlay */}
+            <svg 
+              width="130" 
+              height="130" 
+              viewBox="0 0 100 100" 
+              style={{ 
+                position: "absolute", 
+                inset: 0, 
+                animation: "spin 2.5s linear infinite",
+                pointerEvents: "none",
+                zIndex: 2
+              }}
+            >
+              <defs>
+                <linearGradient id="radarSweep" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              {/* Pie slice representing radar sweep */}
+              <path d="M 50 50 L 50 8 A 42 42 0 0 1 80 20 Z" fill="url(#radarSweep)" />
+              {/* Radar needle hand line */}
+              <line x1="50" y1="50" x2="50" y2="8" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" style={{ filter: "drop-shadow(0 0 4px #10b981)" }} />
+            </svg>
+
+            <svg width="130" height="130" viewBox="0 0 100 100" style={{ position: "relative", zIndex: 1 }}>
               <circle cx="50" cy="50" r="42" fill="transparent" stroke="rgba(255,255,255,0.03)" strokeWidth="6" />
               <circle 
                 cx="50" 
@@ -86,15 +145,32 @@ export default function Slide9Evaluation() {
                 stroke="#10b981" 
                 strokeWidth="6" 
                 strokeDasharray="263.8" 
-                strokeDashoffset="18.2" // 93.08% stroke fill
+                strokeDashoffset={active ? "18.2" : "263.8"}
                 strokeLinecap="round" 
                 transform="rotate(-90 50 50)"
-                style={{ filter: "drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))" }}
+                style={{ 
+                  filter: "drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))",
+                  transition: "stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1)"
+                }}
               />
             </svg>
-            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+
+            {/* Radar glow and text container */}
+            <div 
+              style={{ 
+                position: "absolute", 
+                inset: 12, 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "center", 
+                justifyContent: "center",
+                borderRadius: "50%",
+                animation: "radar-glow 2s infinite ease-in-out",
+                zIndex: 3
+              }}
+            >
               <span style={{ fontWeight: 900, fontSize: "1.7rem", color: "var(--text-primary)", lineHeight: "1" }}>
-                {accuracy}%
+                <AnimatedNumber value={accuracy} decimals={2} suffix="%" />
               </span>
               <span style={{ fontSize: "0.6rem", color: "#10b981", fontWeight: 700, textTransform: "uppercase", marginTop: "2px" }}>
                 Multinomial NB
@@ -105,7 +181,7 @@ export default function Slide9Evaluation() {
           <div style={{ display: "flex", alignItems: "center", gap: "6px", textAlign: "center" }}>
             <CheckCircle2 size={14} color="#10b981" style={{ flexShrink: 0 }} />
             <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", lineHeight: "1.4" }}>
-              Model sukses memprediksi **5.028 dari 5.402** dokumen uji dengan tepat.
+              Model sukses memprediksi **<AnimatedNumber value={5028} /> dari <AnimatedNumber value={5402} />** dokumen uji dengan tepat.
             </span>
           </div>
         </div>

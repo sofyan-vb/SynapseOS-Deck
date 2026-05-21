@@ -52,9 +52,9 @@ export default function Slide4Methodology() {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="fade-in-blur">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-color)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB II: METODOLOGI PENELITIAN
         </span>
@@ -68,7 +68,7 @@ export default function Slide4Methodology() {
 
       {/* Interactive Process Flowbar */}
       <div 
-        className="fade-in-up anim-delay-1"
+        className="fade-in-blur anim-delay-1"
         style={{
           display: "flex",
           justifyContent: "space-between",

@@ -82,6 +82,29 @@ export default function Slide6Business() {
 
           <div style={{ width: "100%", height: "200px", padding: "10px 20px 0 10px" }}>
             <svg width="100%" height="100%" viewBox="0 0 450 180" style={{ overflow: "visible" }}>
+              <defs>
+                {/* Glowing Active Shimmer Gradients */}
+                <linearGradient id="barShimmerGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                  <stop offset="0%" stopColor="var(--accent-color)" />
+                  <stop offset="30%" stopColor="var(--accent-color)" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.6">
+                    <animate attributeName="offset" values="-0.3; 1.3" dur="1.5s" repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="70%" stopColor="var(--accent-color)" />
+                  <stop offset="100%" stopColor="var(--accent-color)" />
+                </linearGradient>
+
+                <linearGradient id="barShimmerGradAccent" x1="0%" y1="100%" x2="0%" y2="0%">
+                  <stop offset="0%" stopColor="var(--accent-secondary)" />
+                  <stop offset="30%" stopColor="var(--accent-secondary)" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8">
+                    <animate attributeName="offset" values="-0.3; 1.3" dur="1.5s" repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="70%" stopColor="var(--accent-secondary)" />
+                  <stop offset="100%" stopColor="var(--accent-secondary)" />
+                </linearGradient>
+              </defs>
+
               {/* Reference Grid lines */}
               <line x1="0" y1="140" x2="450" y2="140" stroke="var(--card-border)" strokeWidth="1" />
               <line x1="0" y1="90" x2="450" y2="90" stroke="var(--card-border)" strokeDasharray="4 4" strokeWidth="1" />
@@ -107,7 +130,7 @@ export default function Slide6Business() {
                       width={barWidth}
                       height={height}
                       className="chart-bar"
-                      fill={idx === 4 ? "var(--accent-secondary)" : "var(--accent-color)"}
+                      fill={idx === 4 ? "url(#barShimmerGradAccent)" : "url(#barShimmerGrad)"}
                       rx="4"
                       style={{ filter: idx === 4 ? "drop-shadow(0 0 5px var(--glow-secondary))" : "none" }}
                     />

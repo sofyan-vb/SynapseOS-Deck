@@ -1,8 +1,16 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Database, FileText, CheckCircle2, ChevronRight } from "lucide-react";
+import AnimatedNumber from "../AnimatedNumber";
 
 export default function Slide5Dataset() {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    setActive(true);
+  }, []);
+
   const sources = [
     { name: "TurnBackHoax", count: 12995, pct: 48.1 },
     { name: "Kompas.com", count: 4500, pct: 16.7 },
@@ -15,9 +23,9 @@ export default function Slide5Dataset() {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="zoom-in-accent">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-secondary)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB III: DATASET PENELITIAN
         </span>
@@ -31,7 +39,7 @@ export default function Slide5Dataset() {
 
       {/* Main Grid Layout */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="zoom-in-accent anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1fr 1.3fr", 
@@ -72,14 +80,15 @@ export default function Slide5Dataset() {
                 padding: "20px 16px", 
                 textAlign: "center",
                 background: "rgba(255,255,255,0.01)",
-                borderColor: "rgba(255,255,255,0.05)"
+                borderColor: "rgba(255,255,255,0.05)",
+                animation: "pulse-cyan-glow 3s infinite ease-in-out"
               }}
             >
               <span style={{ fontSize: "0.65rem", fontWeight: 800, color: "var(--text-secondary)", display: "block", textTransform: "uppercase" }}>
                 Total Data Mentah
               </span>
               <strong style={{ fontSize: "1.8rem", fontWeight: 800, color: "var(--text-primary)", display: "block", margin: "6px 0" }}>
-                29.654
+                <AnimatedNumber value={29654} />
               </strong>
               <span style={{ fontSize: "0.7rem", color: "var(--text-secondary)" }}>
                 Baris data awal
@@ -94,14 +103,15 @@ export default function Slide5Dataset() {
                 textAlign: "center",
                 background: "rgba(16, 185, 129, 0.05)",
                 borderColor: "rgba(16, 185, 129, 0.2)",
-                boxShadow: "0 0 15px rgba(16, 185, 129, 0.05)"
+                boxShadow: "0 0 15px rgba(16, 185, 129, 0.05)",
+                animation: "pulse-green-glow 2.5s infinite ease-in-out"
               }}
             >
               <span style={{ fontSize: "0.65rem", fontWeight: 800, color: "#10b981", display: "block", textTransform: "uppercase" }}>
                 Total Data Bersih
               </span>
               <strong style={{ fontSize: "1.8rem", fontWeight: 800, color: "#10b981", display: "block", margin: "6px 0" }}>
-                27.010
+                <AnimatedNumber value={27010} />
               </strong>
               <span style={{ fontSize: "0.7rem", color: "var(--text-secondary)" }}>
                 Baris data unik final
@@ -112,7 +122,7 @@ export default function Slide5Dataset() {
           <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "0 10px" }}>
             <CheckCircle2 size={14} color="#10b981" />
             <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>
-              Proses *Cleaning* berhasil mengeliminasi **2.644 data duplikat & kosong**.
+              Proses *Cleaning* berhasil mengeliminasi **<AnimatedNumber value={2644} /> data duplikat & kosong**.
             </span>
           </div>
 
@@ -127,9 +137,25 @@ export default function Slide5Dataset() {
             borderColor: "rgba(6, 182, 212, 0.15)",
             display: "flex",
             flexDirection: "column",
-            gap: "10px"
+            gap: "10px",
+            position: "relative",
+            overflow: "hidden"
           }}
         >
+          {/* Cyan Laser Scan Sweep */}
+          <div style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: "2px",
+            background: "linear-gradient(90deg, transparent, var(--accent-secondary) 50%, transparent)",
+            boxShadow: "0 0 8px var(--accent-secondary)",
+            animation: "scan-vertical 3s linear infinite",
+            opacity: 0.5,
+            pointerEvents: "none",
+            zIndex: 10
+          }} />
           <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--text-secondary)", letterSpacing: "1px", textTransform: "uppercase" }}>
             Komposisi 8 Sumber Data Terintegrasi
           </span>
@@ -153,18 +179,19 @@ export default function Slide5Dataset() {
                     {i + 1}. {src.name}
                   </span>
                   <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--accent-secondary)" }}>
-                    {src.count.toLocaleString("id-ID")} baris ({src.pct}%)
+                    <AnimatedNumber value={src.count} /> baris (<AnimatedNumber value={src.pct} decimals={1} suffix="%" />)
                   </span>
                 </div>
                 {/* Horizontal contribution bar */}
                 <div style={{ width: "100%", height: "5px", background: "rgba(255,255,255,0.05)", borderRadius: "3px", overflow: "hidden" }}>
                   <div 
                     style={{ 
-                      width: `${src.pct}%`, 
+                      width: active ? `${src.pct}%` : "0%", 
                       height: "100%", 
                       background: "linear-gradient(90deg, #06b6d4 0%, #10b981 100%)",
                       position: "relative",
-                      overflow: "hidden"
+                      overflow: "hidden",
+                      transition: `width 1.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.05}s`
                     }} 
                   >
                     <div style={{
@@ -173,8 +200,8 @@ export default function Slide5Dataset() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
-                      animation: "shimmer-bar 2.5s infinite"
+                      background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.2) 70%, transparent 100%)",
+                      animation: "shimmer-bar 1.2s infinite"
                     }} />
                   </div>
                 </div>

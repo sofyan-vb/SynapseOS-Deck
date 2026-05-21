@@ -1,12 +1,13 @@
 "use client";
 
 import { Award, Zap, CheckCircle2, Cpu } from "lucide-react";
+import AnimatedNumber from "../AnimatedNumber";
 
 export default function Slide11Conclusion() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="bounce-in">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-secondary)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB VII: KEUNGGULAN KOMPUTASI & PENUTUP
         </span>
@@ -20,7 +21,7 @@ export default function Slide11Conclusion() {
 
       {/* Main Grid Layout */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="bounce-in anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1fr 1.3fr", 
@@ -60,7 +61,7 @@ export default function Slide11Conclusion() {
             <div style={{ background: "rgba(6, 182, 212, 0.05)", border: "1px solid rgba(6, 182, 212, 0.15)", borderRadius: "8px", padding: "10px 12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "var(--accent-secondary)" }}>Multinomial Naive Bayes</span>
-                <strong style={{ fontSize: "0.85rem", color: "#10b981" }}>93,08% Akurasi</strong>
+                <strong style={{ fontSize: "0.85rem", color: "#10b981" }}><AnimatedNumber value={93.08} decimals={2} suffix="% Akurasi" /></strong>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "4px", fontSize: "0.7rem", color: "var(--text-secondary)" }}>
                 <span>Waktu Latih: **&lt; 0.5 Detik**</span>
@@ -72,7 +73,7 @@ export default function Slide11Conclusion() {
             <div style={{ background: "rgba(255, 255, 255, 0.01)", border: "1px solid rgba(255, 255, 255, 0.04)", borderRadius: "8px", padding: "10px 12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-secondary)" }}>Deep Learning (LSTM/CNN)</span>
-                <strong style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>~94,10% Akurasi</strong>
+                <strong style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>~<AnimatedNumber value={94.10} decimals={2} suffix="% Akurasi" /></strong>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "4px", fontSize: "0.7rem", color: "var(--text-secondary)" }}>
                 <span>Waktu Latih: **~45 Menit**</span>
@@ -85,7 +86,7 @@ export default function Slide11Conclusion() {
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <Cpu size={14} color="var(--accent-secondary)" />
             <span style={{ fontSize: "0.72rem", color: "var(--text-secondary)" }}>
-              Naive Bayes unggul **5000x lebih cepat** dalam pelatihan dibanding LSTM.
+              Naive Bayes unggul **<AnimatedNumber value={5000} />x lebih cepat** dalam pelatihan dibanding LSTM.
             </span>
           </div>
 
@@ -103,13 +104,13 @@ export default function Slide11Conclusion() {
 
           {[
             {
-              text: "Integrasi multi-sumber data sukses melahirkan korpus data bahasa Indonesia yang kaya dan bervariasi (total dataset bersih 27.010 data)."
+              node: <>Integrasi multi-sumber data sukses melahirkan korpus data bahasa Indonesia yang kaya dan bervariasi (total dataset bersih <strong><AnimatedNumber value={27010} /></strong> data).</>
             },
             {
-              text: "Kombinasi NLP preprocessing pipeline dan TF-IDF mampu memetakan 66.340 dimensi kosa kata secara optimal untuk deteksi pola hoax."
+              node: <>Kombinasi NLP preprocessing pipeline dan TF-IDF mampu memetakan <strong><AnimatedNumber value={66340} /></strong> dimensi kosa kata secara optimal untuk deteksi pola hoax.</>
             },
             {
-              text: "Model Multinomial Naive Bayes terbukti sangat handal (Akurasi 93,08%) dan siap diimplementasikan sebagai filter misinformasi real-time."
+              node: <>Model Multinomial Naive Bayes terbukti sangat handal (Akurasi <strong><AnimatedNumber value={93.08} decimals={2} suffix="%" /></strong>) dan siap diimplementasikan sebagai filter misinformasi real-time.</>
             }
           ].map((item, idx) => (
             <div 
@@ -141,7 +142,7 @@ export default function Slide11Conclusion() {
                 {idx + 1}
               </div>
               <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", lineHeight: "1.4" }}>
-                {item.text}
+                {item.node}
               </p>
             </div>
           ))}

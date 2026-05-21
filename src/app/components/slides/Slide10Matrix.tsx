@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Grid, HelpCircle, ShieldCheck, ShieldAlert, AlertTriangle } from "lucide-react";
+import AnimatedNumber from "../AnimatedNumber";
 
 export default function Slide10Matrix() {
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
@@ -30,9 +31,9 @@ export default function Slide10Matrix() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="rotate-fade">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-color)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB VI: ANALISIS KEKELIRUAN MODEL
         </span>
@@ -46,7 +47,7 @@ export default function Slide10Matrix() {
 
       {/* Main Grid */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="rotate-fade anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1.2fr 1fr", 
@@ -102,11 +103,28 @@ export default function Slide10Matrix() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                boxShadow: hoveredCell === "TN" ? "0 0 15px rgba(16, 185, 129, 0.3)" : "none"
+                boxShadow: hoveredCell === "TN" ? "0 0 15px rgba(16, 185, 129, 0.3)" : "none",
+                position: "relative",
+                overflow: "hidden",
+                animation: "pulse-green-glow 3s infinite ease-in-out"
               }}
             >
+              {/* Green Laser Scan Sweep */}
+              <div style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "2px",
+                background: "linear-gradient(90deg, transparent, #10b981 50%, transparent)",
+                boxShadow: "0 0 8px #10b981",
+                animation: "scan-vertical 1.5s linear infinite",
+                animationDelay: "0s",
+                opacity: 0.6,
+                pointerEvents: "none"
+              }} />
               <ShieldCheck size={28} color="#10b981" />
-              <strong style={{ fontSize: "1.6rem", display: "block", marginTop: "4px" }}>2.330</strong>
+              <strong style={{ fontSize: "1.6rem", display: "block", marginTop: "4px" }}><AnimatedNumber value={2330} /></strong>
               <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.7)" }}>TRUE NEGATIVE (TN)</span>
             </div>
 
@@ -124,11 +142,28 @@ export default function Slide10Matrix() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                boxShadow: hoveredCell === "FP" ? "0 0 15px rgba(239, 68, 68, 0.1)" : "none"
+                boxShadow: hoveredCell === "FP" ? "0 0 15px rgba(239, 68, 68, 0.1)" : "none",
+                position: "relative",
+                overflow: "hidden",
+                animation: "pulse-amber-glow 3.2s infinite ease-in-out"
               }}
             >
+              {/* Amber Laser Scan Sweep */}
+              <div style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "2px",
+                background: "linear-gradient(90deg, transparent, #f59e0b 50%, transparent)",
+                boxShadow: "0 0 8px #f59e0b",
+                animation: "scan-vertical 1.8s linear infinite",
+                animationDelay: "0.4s",
+                opacity: 0.5,
+                pointerEvents: "none"
+              }} />
               <AlertTriangle size={24} color="#f59e0b" />
-              <strong style={{ fontSize: "1.4rem", display: "block", marginTop: "4px" }}>170</strong>
+              <strong style={{ fontSize: "1.4rem", display: "block", marginTop: "4px" }}><AnimatedNumber value={170} /></strong>
               <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "var(--text-secondary)" }}>FALSE POSITIVE (FP)</span>
             </div>
 
@@ -151,11 +186,28 @@ export default function Slide10Matrix() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                boxShadow: hoveredCell === "FN" ? "0 0 15px rgba(239, 68, 68, 0.1)" : "none"
+                boxShadow: hoveredCell === "FN" ? "0 0 15px rgba(239, 68, 68, 0.1)" : "none",
+                position: "relative",
+                overflow: "hidden",
+                animation: "pulse-yellow-glow 3.4s infinite ease-in-out"
               }}
             >
+              {/* Red Laser Scan Sweep */}
+              <div style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "2px",
+                background: "linear-gradient(90deg, transparent, #ef4444 50%, transparent)",
+                boxShadow: "0 0 8px #ef4444",
+                animation: "scan-vertical 1.7s linear infinite",
+                animationDelay: "0.8s",
+                opacity: 0.5,
+                pointerEvents: "none"
+              }} />
               <AlertTriangle size={24} color="#ef4444" />
-              <strong style={{ fontSize: "1.4rem", display: "block", marginTop: "4px" }}>204</strong>
+              <strong style={{ fontSize: "1.4rem", display: "block", marginTop: "4px" }}><AnimatedNumber value={204} /></strong>
               <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "var(--text-secondary)" }}>FALSE NEGATIVE (FN)</span>
             </div>
 
@@ -173,11 +225,28 @@ export default function Slide10Matrix() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                boxShadow: hoveredCell === "TP" ? "0 0 15px rgba(239, 68, 68, 0.3)" : "none"
+                boxShadow: hoveredCell === "TP" ? "0 0 15px rgba(239, 68, 68, 0.3)" : "none",
+                position: "relative",
+                overflow: "hidden",
+                animation: "pulse-red-glow 2.8s infinite ease-in-out"
               }}
             >
+              {/* Red Laser Scan Sweep */}
+              <div style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "2px",
+                background: "linear-gradient(90deg, transparent, #ef4444 50%, transparent)",
+                boxShadow: "0 0 8px #ef4444",
+                animation: "scan-vertical 1.4s linear infinite",
+                animationDelay: "0.2s",
+                opacity: 0.6,
+                pointerEvents: "none"
+              }} />
               <ShieldAlert size={28} color="#ef4444" />
-              <strong style={{ fontSize: "1.6rem", display: "block", marginTop: "4px" }}>2.698</strong>
+              <strong style={{ fontSize: "1.6rem", display: "block", marginTop: "4px" }}><AnimatedNumber value={2698} /></strong>
               <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.7)" }}>TRUE POSITIVE (TP)</span>
             </div>
 

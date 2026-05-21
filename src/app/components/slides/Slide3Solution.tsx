@@ -4,9 +4,9 @@ import { HelpCircle, ShieldCheck, Target, CheckCircle2 } from "lucide-react";
 
 export default function Slide3Solution() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "15px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="fade-in-right">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-secondary)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB I: RANCANGAN PENELITIAN
         </span>
@@ -20,7 +20,7 @@ export default function Slide3Solution() {
 
       {/* 3-Column Layout */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="fade-in-right anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1fr 1.2fr 1fr", 

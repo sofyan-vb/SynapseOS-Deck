@@ -37,9 +37,9 @@ export default function Slide7Preprocessing() {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "20px 40px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", padding: "0px 20px 8px 20px" }}>
       {/* Header */}
-      <div className="fade-in-up">
+      <div className="text-focus-in">
         <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--accent-secondary)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
           BAB IV: TEKNOLOGI PENGOLAHAN TEKS
         </span>
@@ -53,7 +53,7 @@ export default function Slide7Preprocessing() {
 
       {/* Main Grid */}
       <div 
-        className="fade-in-up anim-delay-1" 
+        className="text-focus-in anim-delay-1" 
         style={{ 
           display: "grid", 
           gridTemplateColumns: "1fr 1.2fr", 
@@ -127,9 +127,25 @@ export default function Slide7Preprocessing() {
             borderColor: "rgba(6, 182, 212, 0.25)",
             borderRadius: "16px",
             boxShadow: "0 10px 40px rgba(0,0,0,0.4), 0 0 15px rgba(6, 182, 212, 0.1)",
-            overflow: "hidden"
+            overflow: "hidden",
+            position: "relative"
           }}
         >
+          {/* Green Terminal Laser Scan Sweep */}
+          <div style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: "2px",
+            background: "linear-gradient(90deg, transparent, #34d399 50%, transparent)",
+            boxShadow: "0 0 8px #34d399",
+            animation: "scan-vertical 3.5s linear infinite",
+            animationDelay: "0.2s",
+            opacity: 0.4,
+            pointerEvents: "none",
+            zIndex: 10
+          }} />
           {/* Terminal Window Header */}
           <div style={{ background: "rgba(255,255,255,0.03)", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
@@ -182,6 +198,7 @@ export default function Slide7Preprocessing() {
                 }}
               >
                 {stages[pipelineIndex].result}
+                <span className="terminal-cursor" style={{ color: "var(--accent-secondary)", fontWeight: "bold" }}>_</span>
               </div>
             </div>
 
