@@ -151,7 +151,7 @@ export default function Slide5Market() {
               Strategi Penetrasi Kami:
             </span>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.85rem", fontWeight: 600 }}>
-              <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "rgba(255,255,255,0.03)", border: "1px solid var(--card-border)", display: "flex", alignItems: "center", justify: "center", justifyContent: "center" }}>
+              <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "rgba(255,255,255,0.03)", border: "1px solid var(--card-border)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {activeMarket === "tam" ? <Landmark size={12} color={current.color} /> : activeMarket === "sam" ? <Compass size={12} color={current.color} /> : <Award size={12} color={current.color} />}
               </div>
               <span>{current.strategy}</span>

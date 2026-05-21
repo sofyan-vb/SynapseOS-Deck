@@ -98,6 +98,10 @@
 
 body {
   background-color: var(--bg-color);
+  background-image: url('/tech_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--text-primary);
   font-family: var(--font-family);
   overflow: hidden;
@@ -175,6 +179,13 @@ body {
   height: 100vh;
   width: 100vw;
   z-index: 1;
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.app-container::-webkit-scrollbar {
+  display: none !important;
 }
 
 .main-content {
@@ -183,8 +194,14 @@ body {
   flex-direction: column;
   position: relative;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden !important;
   transition: margin-left 0.4s ease;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* ----------------------------------------------------
@@ -226,6 +243,13 @@ body {
   justify-content: center;
   align-items: center;
   perspective: 1500px;
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.slide-viewport::-webkit-scrollbar {
+  display: none !important;
 }
 
 .slide-wrapper {
@@ -239,6 +263,13 @@ body {
   box-sizing: border-box;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.slide-wrapper::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* Slide Transition Animations */
@@ -449,6 +480,11 @@ body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Slide 2 - Timeline Cards */
@@ -721,6 +757,24 @@ body {
 }
 
 .nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-color);
+}
+
+.nav-btn-extended {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  height: 32px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn-extended:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--accent-color);
 }

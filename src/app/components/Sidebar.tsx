@@ -32,14 +32,17 @@ export default function Sidebar({
   onSetTheme,
 }: SidebarProps) {
   const slides = [
-    "1. Sampul Neuralis OS",
-    "2. Masalah Industri",
-    "3. Solusi & Mockup Dasbor",
-    "4. Arsitektur Inti Sistem",
-    "5. Ukuran Peluang Pasar",
-    "6. Proyeksi ARR 5 Tahun",
-    "7. Tim Pendiri & Riset",
-    "8. Roadmap Aksi & Demo",
+    "1. Judul & Identitas Proyek",
+    "2. Latar Belakang Masalah",
+    "3. Rumusan, Batasan & Tujuan",
+    "4. Metodologi (Diagram Alir)",
+    "5. Laporan Dataset & Sumber Data",
+    "6. Distribusi Kelas Dataset",
+    "7. Pra-pemrosesan Teks (NLP)",
+    "8. Ekstraksi Fitur & Data Split",
+    "9. Hasil Pengujian & Akurasi",
+    "10. Analisis Confusion Matrix",
+    "11. Keunggulan & Kesimpulan"
   ];
 
   const themes = [

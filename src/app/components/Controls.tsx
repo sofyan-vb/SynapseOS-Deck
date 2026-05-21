@@ -66,11 +66,12 @@ export default function Controls({
             alignItems: "center",
             padding: "2px",
             borderRadius: "4px",
-            transition: "all 0.2s ease"
+            transition: "all 0.2s ease",
+            width: "20px",
+            height: "20px"
           }}
           title="Reset Timer"
           className="nav-btn"
-          style={{ width: "20px", height: "20px" }}
         >
           <RotateCcw size={12} />
         </button>
@@ -102,20 +103,6 @@ export default function Controls({
           <ChevronRight size={20} />
         </button>
       </div>
-
-      <div style={{ width: "1px", height: "20px", background: "var(--card-border)" }} />
-
-      {/* Autoplay controller */}
-      <button
-        onClick={onTogglePlay}
-        className="nav-btn"
-        style={{
-          color: isPlaying ? "var(--accent-color)" : "var(--text-primary)",
-        }}
-        title={isPlaying ? "Jeda Auto-play (Space)" : "Mulai Auto-play (Space)"}
-      >
-        {isPlaying ? <Pause size={18} /> : <Play size={18} fill="currentColor" />}
-      </button>
 
       {/* Dynamic Progress Bar */}
       <div className="progress-track">
