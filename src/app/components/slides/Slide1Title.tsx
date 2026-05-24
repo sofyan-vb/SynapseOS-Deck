@@ -114,7 +114,7 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
   };
 
   return (
-    <div className="title-container" style={{ gap: "6px", justifyContent: "flex-start", height: "100%", padding: "40px 40px 10px 40px" }}>
+    <div className="title-container" style={{ gap: "6px", justifyContent: "flex-start", height: "100%", padding: "0px 40px 10px 40px", marginTop: "-15px" }}>
       {/* Dynamic Floating Animated Icon representing Naive Bayes / Fake News Classifier */}
       <div 
         className="fade-in-up"
@@ -202,14 +202,14 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
             background: "transparent",
             border: "none",
             color: isClient && titleColor !== "#f8fafc" ? titleColor : "var(--text-primary)",
-            fontSize: "2.1rem",
+            fontSize: "2.8rem",
             fontWeight: 800,
             lineHeight: 1.2,
             textAlign: "center",
             outline: "none",
             resize: "none",
             width: "100%",
-            height: "130px",
+            height: "170px",
             overflow: "hidden",
             fontFamily: "var(--font-family)",
             borderBottom: "1px dashed rgba(255, 255, 255, 0.1)",
@@ -383,7 +383,7 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
 
       {/* Presenters Section */}
       <div 
-        className="glass-panel fade-in-up anim-delay-3"
+        className="glass-panel fade-in-up anim-delay-3 presenters-section"
         style={{
           padding: "16px 24px",
           borderRadius: "16px",
