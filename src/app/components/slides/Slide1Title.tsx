@@ -5,9 +5,10 @@ import { Palette, Play, ShieldAlert, Cpu, BookOpen, GraduationCap } from "lucide
 
 interface Slide1Props {
   onStartPresenting?: () => void;
+  isEditMode?: boolean;
 }
 
-export default function Slide1Title({ onStartPresenting }: Slide1Props) {
+export default function Slide1Title({ onStartPresenting, isEditMode = false }: Slide1Props) {
   const [projectTitle, setProjectTitle] = useState(
     "Klasifikasi Artikel Berita Palsu (Hoax) pada Portal Informasi Digital Menggunakan Algoritma Naive Bayes"
   );
@@ -162,10 +163,10 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
             border: "1px solid var(--card-border)",
             borderRadius: "20px",
             padding: "4px 12px",
-            opacity: titleHovered ? 1 : 0,
-            transform: titleHovered ? "translateY(0)" : "translateY(5px)",
+            opacity: (titleHovered && isEditMode) ? 1 : 0,
+            transform: (titleHovered && isEditMode) ? "translateY(0)" : "translateY(5px)",
             transition: "all 0.3s ease",
-            pointerEvents: titleHovered ? "auto" : "none",
+            pointerEvents: (titleHovered && isEditMode) ? "auto" : "none",
             zIndex: 10,
             boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
           }}
@@ -198,7 +199,9 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
         <textarea
           value={isClient ? projectTitle : "Klasifikasi Artikel Berita Palsu (Hoax) pada Portal Informasi Digital Menggunakan Algoritma Naive Bayes"}
           onChange={(e) => handleTitleChange(e.target.value)}
+          readOnly={!isEditMode}
           style={{
+            pointerEvents: isEditMode ? "auto" : "none",
             background: "transparent",
             border: "none",
             color: isClient && titleColor !== "#f8fafc" ? titleColor : "var(--text-primary)",
@@ -258,7 +261,9 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
             type="text"
             value={isClient ? lecturer : "Miftahul Walid, S.Kom, MT"}
             onChange={(e) => handleLecturerChange(e.target.value)}
+            readOnly={!isEditMode}
             style={{
+              pointerEvents: isEditMode ? "auto" : "none",
               background: "transparent",
               border: "none",
               color: isClient ? lecturerColor : "var(--text-primary)",
@@ -277,11 +282,11 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
               display: "flex",
               alignItems: "center",
               gap: "4.5px",
-              opacity: lecturerHovered ? 1 : 0,
-              width: lecturerHovered ? "110px" : "0px",
+              opacity: (lecturerHovered && isEditMode) ? 1 : 0,
+              width: (lecturerHovered && isEditMode) ? "110px" : "0px",
               overflow: "hidden",
               transition: "all 0.4s ease",
-              marginLeft: lecturerHovered ? "8px" : "0px"
+              marginLeft: (lecturerHovered && isEditMode) ? "8px" : "0px"
             }}
           >
             <Palette size={12} color="var(--accent-color)" style={{ marginRight: "2px", flexShrink: 0 }} />
@@ -330,7 +335,9 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
             type="text"
             value={isClient ? prodi : "Teknik Informatika, Universitas Islam Madura"}
             onChange={(e) => handleProdiChange(e.target.value)}
+            readOnly={!isEditMode}
             style={{
+              pointerEvents: isEditMode ? "auto" : "none",
               background: "transparent",
               border: "none",
               color: isClient ? prodiColor : "var(--text-secondary)",
@@ -349,11 +356,11 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
               display: "flex",
               alignItems: "center",
               gap: "4.5px",
-              opacity: prodiHovered ? 1 : 0,
-              width: prodiHovered ? "110px" : "0px",
+              opacity: (prodiHovered && isEditMode) ? 1 : 0,
+              width: (prodiHovered && isEditMode) ? "110px" : "0px",
               overflow: "hidden",
               transition: "all 0.4s ease",
-              marginLeft: prodiHovered ? "8px" : "0px"
+              marginLeft: (prodiHovered && isEditMode) ? "8px" : "0px"
             }}
           >
             <Palette size={12} color="var(--accent-secondary)" style={{ marginRight: "2px", flexShrink: 0 }} />
@@ -405,7 +412,9 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
               type="text"
               value={isClient ? groupName : "Tim Penyusun:"}
               onChange={(e) => handleNameChange(e.target.value)}
+              readOnly={!isEditMode}
               style={{
+                pointerEvents: isEditMode ? "auto" : "none",
                 background: "transparent",
                 border: "none",
                 color: "var(--text-secondary)",
@@ -421,7 +430,7 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
           </div>
 
           {/* Color Picker dots */}
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div style={{ display: isEditMode ? "flex" : "none", gap: "6px" }}>
             {paletteColors.map((c) => (
               <button
                 key={c.hex}
@@ -448,7 +457,9 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
         <textarea
           value={isClient ? members : "Sofyan Ibnu Ghazali (20241220078)\nSyamsul Arifin (20241220070)\nMoh. Ofikurrahman (20241220077)"}
           onChange={(e) => handleMembersChange(e.target.value)}
+          readOnly={!isEditMode}
           style={{
+            pointerEvents: isEditMode ? "auto" : "none",
             background: "transparent",
             border: "none",
             color: isClient ? groupColor : "#06b6d4",

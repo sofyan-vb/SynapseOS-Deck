@@ -278,7 +278,7 @@ export default function PresentationPage() {
   const renderSlideContent = () => {
     switch (currentSlide) {
       case 0:
-        return <Slide1Title onStartPresenting={() => setCurrentSlide(1)} />;
+        return <Slide1Title onStartPresenting={() => setCurrentSlide(1)} isEditMode={isEditMode} />;
       case 1:
         return <Slide2Problem />;
       case 2:
