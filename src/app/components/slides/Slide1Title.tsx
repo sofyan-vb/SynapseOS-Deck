@@ -114,14 +114,14 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
   };
 
   return (
-    <div className="title-container" style={{ gap: "6px", justifyContent: "center", height: "100%", padding: "35px 40px 10px 40px" }}>
+    <div className="title-container" style={{ gap: "6px", justifyContent: "flex-start", height: "100%", padding: "40px 40px 10px 40px" }}>
       {/* Dynamic Floating Animated Icon representing Naive Bayes / Fake News Classifier */}
       <div 
         className="fade-in-up"
         style={{
           display: "flex",
           justifyContent: "center",
-          marginBottom: "10px"
+          marginBottom: "4px"
         }}
       >
         <div 
@@ -201,15 +201,15 @@ export default function Slide1Title({ onStartPresenting }: Slide1Props) {
           style={{
             background: "transparent",
             border: "none",
-            color: isClient ? titleColor : "var(--text-primary)",
-            fontSize: "2.4rem",
+            color: isClient && titleColor !== "#f8fafc" ? titleColor : "var(--text-primary)",
+            fontSize: "2.1rem",
             fontWeight: 800,
             lineHeight: 1.2,
             textAlign: "center",
             outline: "none",
             resize: "none",
             width: "100%",
-            height: "160px",
+            height: "130px",
             overflow: "hidden",
             fontFamily: "var(--font-family)",
             borderBottom: "1px dashed rgba(255, 255, 255, 0.1)",

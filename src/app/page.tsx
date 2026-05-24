@@ -342,8 +342,8 @@ export default function PresentationPage() {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "0 24px",
-            background: "rgba(10, 8, 20, 0.4)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+            background: "var(--card-bg)",
+            borderBottom: "1px solid var(--card-border)",
             boxShadow: "0 4px 30px rgba(0,0,0,0.15)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)"
@@ -651,7 +651,7 @@ export default function PresentationPage() {
               bottom: "85px",
               left: "50%",
               transform: "translateX(-50%)",
-              background: "rgba(10, 8, 24, 0.85)",
+              background: "var(--card-bg)",
               borderColor: "var(--accent-color)",
               padding: "8px 18px",
               borderRadius: "20px",
@@ -689,7 +689,12 @@ export default function PresentationPage() {
         autoplayInterval={autoplayInterval}
         onSetAutoplayInterval={setAutoplayInterval}
         theme={theme}
-        onSetTheme={setTheme}
+        onSetTheme={(t) => {
+          // If in light theme, ignore changing to dark theme from sidebar menu
+          if (theme !== "solar") {
+            setTheme(t);
+          }
+        }}
       />
     </div>
   );
